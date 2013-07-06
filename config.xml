@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<config>
+	<current_mc>
+		<value>vanilla</value>
+	</current_mc>
+	<backup_path>
+		<value>./backup/</value>
+	</backup_path>
+	<ramdisk_path>
+		<value>./minecraft_ramdisk/</value>
+	</ramdisk_path>
+	<mc_variants>
+		<vanilla>
+			<path>./vanilla/</path>
+			<link>https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar</link>
+			<unpack_server>False</unpack_server>
+		</vanilla>
+		<ftb>
+			<path>./ftb</path>
+			<link>http://www.creeperrepo.net/direct/FTB2/55d0448f7671fb6d2a8fe160cd1491a5/modpacks%5EUltimate%5E1_0_1%5EUltimate_Server.zip</link>
+			<unpack_server>True</unpack_server>
+		</ftb>
+		<template>
+			<path></path>
+			<link></link>
+			<unpack_server></unpack_server>
+		</template>
+	</mc_variants>
+	<backup_paths>
+		<vanilla_world>./vanilla/world/</vanilla_world>
+		<ftb_world>./ftb/world</ftb_world>
+	</backup_paths>
+</config>
