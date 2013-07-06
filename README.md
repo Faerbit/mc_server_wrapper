@@ -10,7 +10,7 @@ Features:
 
 + Mutliple Minecraft Installations, inlcuding easy switching between those  
 + Ramdisk Support (you need to ensure yourself that the folder copied to is a Ramdisk)  
-+ Update Command  
++ Update Command (you can specify the URL)
 + Check Player Command (Shuts down the server if there are no more players playing)  
 + Backup Command  
   + 3 backup versions on demand  
