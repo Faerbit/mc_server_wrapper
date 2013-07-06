@@ -1,3 +1,4 @@
+#! /usr/bin/python
 import minecraft_startup as mc
 import argparse
 
