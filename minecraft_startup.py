@@ -114,7 +114,7 @@ def backup(option):
 						backup_path = data_entry.firstChild.data.strip()
 			if config_entry.nodeName == "backup_paths":
 				for data_entry in config_entry.childNodes:
-					if (data_entry.nodeType == TEXT_NODE):
+					if (data_entry.firstChild):
 						backup_paths.append(data_entry.firstChild.data.strip())
 						print("Backing up " + data_entry.firstChild.data.strip())
 					
