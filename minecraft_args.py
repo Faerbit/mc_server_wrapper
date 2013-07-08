@@ -1,5 +1,5 @@
 #! /usr/bin/python
-import minecraft_startup as mc
+import minecraft_client as mc
 import argparse
 
 parser = argparse.ArgumentParser()
