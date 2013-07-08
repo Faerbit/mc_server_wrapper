@@ -12,7 +12,7 @@
 	<mc_variants>
 		<vanilla>
 			<path>./vanilla/</path>
-			<link>https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar</link>
+			<link>https://s3.amazonaws.com/Minecraft.Download/versions/1.6.2/minecraft_server.1.6.2.jar</link>
 			<unpack_server>False</unpack_server>
 		</vanilla>
 		<ftb>

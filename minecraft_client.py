@@ -55,7 +55,7 @@ def start():
 		read_config()
 		subprocess.call("cp -r " + mc_path + "* " + ramdisk_path, shell=True)
 		print("Minecraft copied to RAM.")
-		arg= "java -Xmx2048M -jar *server.jar"
+		arg= "java -Xmx2048M -jar *server*.jar"
 		call = "python minecraft_daemon.py \"" + arg + "\" " + ramdisk_path
 		call = shlex.split(call)
 		subprocess.Popen(call)
