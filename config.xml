@@ -28,6 +28,6 @@
 	</mc_variants>
 	<backup_paths>
 		<vanilla_world>./vanilla/world/</vanilla_world>
-		<ftb_world>./ftb/world</ftb_world>
+		<!--ftb_world>./ftb/world</ftb_world-->
 	</backup_paths>
 </config>
