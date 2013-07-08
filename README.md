@@ -1,10 +1,10 @@
-##mc_server_wrapper
+#mc_server_wrapper
 
 Minecraft Server Wrapper Scripts
 
 A simple wrapper written in python 3
 
-#Features
+##Features
 
 + Mutliple Minecraft Installations
   + Easy switching between those
@@ -16,10 +16,10 @@ A simple wrapper written in python 3
   + 3 backup versions on demand  
   + 3 backup version automatically before each update  
   
-#Usage
+##Usage
 
 Just configure the config.xml(the names should be self-explanatory) to your likings, and call the minecraft_args.py.
 
-#Disclaimer
+##Disclaimer
 
 If you intend to you use this, please open an issue so that I can do the nessecary work like better documentation and choosing a licence.
