@@ -7,32 +7,32 @@ parser.add_argument("action", choices=['start', 'stop', 'update', 'restart', 'ba
 parser.add_argument("command", nargs='?')
 args=parser.parse_args()
 if args.action=='start':
-	mc.start()
+    mc.start()
 if args.action=="stop":
-	mc.stop()
+    mc.stop()
 if args.action=="update":
-	mc.update()
+    mc.update()
 if args.action=="restart":
-	mc.restart()
+    mc.restart()
 if args.action=="backup":
-	mc.backup("regular")
+    mc.backup("regular")
 if args.action=="check_players":
-	mc.check_players()
+    mc.check_players()
 if args.action=="status":
-	mc.status()
+    mc.status()
 if args.action=="switch":
-	if args.command==None:
-		print ("Please enter a minecraft variant!")
-	else:
-		mc.switch(args.command)
+    if args.command==None:
+        print ("Please enter a minecraft variant!")
+    else:
+        mc.switch(args.command)
 if args.action=="ramdisk_saverun":
-	mc.ramdisk_saverun()
+    mc.ramdisk_saverun()
 if args.action=="command":
-	if args.command==None:
-		print ("Please enter a command!")
-	elif args.command=="stop":
-		print ("Please use the stop method provided by this script!")
-	else:
-		mc.command(args.command)
+    if args.command==None:
+        print ("Please enter a command!")
+    elif args.command=="stop":
+        print ("Please use the stop method provided by this script!")
+    else:
+        mc.command(args.command)
 if args.action=="config_test":
-	mc.config_test()
+    mc.config_test()
