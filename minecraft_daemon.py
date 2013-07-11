@@ -45,6 +45,11 @@ while (server.poll()==None):
         tail = subprocess.Popen ("tail --lines=2 server.log", cwd = cwd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, shell=True)
         result, crap= tail.communicate()
         connection.send(result)
+    elif data[0:8]=="announce":
+        data = data[9:len(data)]
+        server.stdin.write(("say " + data + "\n").encode('utf-8'))
+        server.stdin.flush()
+        connection.send("announced")
     elif data[0:7] == "command":
         data = data[8:len(data)]
         server.stdin.write((data+"\n").encode('utf-8'))

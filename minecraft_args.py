@@ -3,13 +3,21 @@ import minecraft_client as mc
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("action", choices=['start', 'stop', 'update', 'restart', 'backup', 'check_players', 'status', 'switch', 'ramdisk_saverun', 'command', 'config_test'])
+parser.add_argument("action", choices=['start', 'stop', 'update', 'restart', 'backup', 'check_players', 'status', 'switch', 'ramdisk_saverun', 'command', 'config_test', 'shutdown'])
 parser.add_argument("command", nargs='?')
 args=parser.parse_args()
 if args.action=='start':
     mc.start()
 if args.action=="stop":
-    mc.stop()
+    if (args.command == ""):
+        mc.stop(0)
+    else
+        mc.stop(args.command)
+if args.action=="shutdown":
+    if (args.command == ""):
+        mc.shutdown(0)
+    else
+        mc.shutdown(args.command)
 if args.action=="update":
     mc.update()
 if args.action=="restart":

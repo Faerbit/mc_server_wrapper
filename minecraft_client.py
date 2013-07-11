@@ -81,13 +81,21 @@ def update():
     subprocess.call("rm -r ./tmp/", shell=True)
     print(current_mc + " updated.")
     
-def stop():
+def stop(time):
     if (status()==True):
+        communicate("announce Server shutting down in " + time + " minutes.")
+        while (time > 0):
+            if (time == 10 or time == 5 or time == 1):
+                communicate("announce Server shutting down in " + time + " minutes.")
         read_config()
         print (communicate("stop"))
         subprocess.call("rsync -ucr " + ramdisk_path + "* "+mc_path,shell=True)
         subprocess.call("rm -r " + ramdisk_path + "*", shell=True)
         print ("RAMdisk cleaned.")
+
+def shutdown(time):
+    stop(time)
+    subprocess.call("sudo shutdown -hP now", shell=True)
         
 def restart():
     stop()
@@ -134,18 +142,7 @@ def check_players():
         number=number[37]
         print("There are " + number + " players online.")
         if (number=="0"):
-            username=""
-            config = dom.parse("config.xml")
-            for config_entry in config.firstChild.childNodes:
-                if config_entry.nodeName =="username":
-                    for data_entry in config_entry.childNodes:
-                        if data_entry.nodeName == "value":
-                            username = data_entry.firstChild.data.strip()
-            if username =="" : 
-                print ("Reading config file failed! Please check your settings!")
-                return False
-
-            subprocess.call(" sudo -u " + username + " python3 minecraft_args.py stop", shell=True)
+            stop(0)
             subprocess.call("sudo shutdown -hP now", shell=True)
     
 def status():
