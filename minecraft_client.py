@@ -137,7 +137,7 @@ def check_players():
             username=""
             config = dom.parse("config.xml")
             for config_entry in config.firstChild.childNodes:
-                if config_entry =="username":
+                if config_entry.nodeName =="username":
                     for data_entry in config_entry.childNodes:
                         if data_entry.nodeName == "value":
                             username = data_entry.firstChild.data.strip()
