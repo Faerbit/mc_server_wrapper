@@ -140,7 +140,7 @@ def check_players():
                     for data_entry in config_entry.childNodes:
                         if data_entry.nodeName == "value":
                             username = data_entry.firstChild.data.strip()
-            if mc_path =="" : 
+            if username =="" : 
                 print ("Reading config file failed! Please check your settings!")
                 return False
 
