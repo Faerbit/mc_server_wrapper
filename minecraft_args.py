@@ -11,12 +11,12 @@ if args.action=='start':
 if args.action=="stop":
     if (args.command == ""):
         mc.stop(0)
-    else
+    else:
         mc.stop(args.command)
 if args.action=="shutdown":
     if (args.command == ""):
         mc.shutdown(0)
-    else
+    else:
         mc.shutdown(args.command)
 if args.action=="update":
     mc.update()
