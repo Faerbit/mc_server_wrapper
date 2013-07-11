@@ -134,6 +134,7 @@ def check_players():
         number=number[37]
         print("There are " + number + " players online.")
         if (number=="0"):
+            username=""
             config = dom.parse("config.xml")
             for config_entry in config.firstChild.childNodes:
                 if config_entry =="username":
