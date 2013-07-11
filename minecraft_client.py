@@ -83,10 +83,10 @@ def update():
     
 def stop(time):
     if (status()==True):
-        communicate("announce Server shutting down in " + time + " minutes.")
+        communicate("announce Server shutting down in " + str(time) + " minutes.")
         while (time > 0):
             if (time == 10 or time == 5 or time == 1):
-                communicate("announce Server shutting down in " + time + " minutes.")
+                communicate("announce Server shutting down in " + (time) + " minutes.")
         read_config()
         print (communicate("stop"))
         subprocess.call("rsync -ucr " + ramdisk_path + "* "+mc_path,shell=True)
