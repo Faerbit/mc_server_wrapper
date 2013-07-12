@@ -9,12 +9,12 @@ args=parser.parse_args()
 if args.action=='start':
     mc.start()
 if args.action=="stop":
-    if (args.command == ""):
+    if (args.command == None):
         mc.stop(0)
     else:
         mc.stop(args.command)
 if args.action=="shutdown":
-    if (args.command == ""):
+    if (args.command == None):
         mc.shutdown(0)
     else:
         mc.shutdown(args.command)
