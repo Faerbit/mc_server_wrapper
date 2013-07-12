@@ -49,7 +49,7 @@ while (server.poll()==None):
         data = data[9:len(data)]
         server.stdin.write(("say " + data + "\n").encode('utf-8'))
         server.stdin.flush()
-        connection.send("announced")
+        connection.send("announced".encode('utf-8'))
     elif data[0:7] == "command":
         data = data[8:len(data)]
         server.stdin.write((data+"\n").encode('utf-8'))
