@@ -18,7 +18,7 @@ sock=socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
 #if os.path.exists("server_socket"):
 #    os.remove("server_socket")
 sock.bind("server_socket")
-sock.listen(1)
+sock.listen(0)
 while (server.poll()==None):
     connection, addr = sock.accept()
     data = (connection.recv(4096)).decode('utf-8')
