@@ -94,7 +94,7 @@ def shutdown(time):
     subprocess.call("sudo shutdown -hP now", shell=True)
         
 def restart():
-    stop()
+    stop(str(0))
     start()
     
 def ramdisk_saverun():
@@ -138,7 +138,7 @@ def check_players():
         number=number[37]
         print("There are " + number + " players online.")
         if (number=="0"):
-            stop(0)
+            stop(str(0))
             subprocess.call("sudo shutdown -hP now", shell=True)
     
 def status():
