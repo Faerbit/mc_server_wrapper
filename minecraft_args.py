@@ -10,14 +10,14 @@ if args.action=='start':
     mc.start()
 if args.action=="stop":
     if (args.command == None):
-        mc.stop(0)
+        mc.stop(str(0))
     else:
-        mc.stop(int(args.command))
+        mc.stop(str(int(args.command)))
 if args.action=="shutdown":
     if (args.command == None):
-        mc.shutdown(0)
+        mc.shutdown(str(0))
     else:
-        mc.shutdown(int(args.command))
+        mc.shutdown(str(int(args.command)))
 if args.action=="update":
     mc.update()
 if args.action=="restart":

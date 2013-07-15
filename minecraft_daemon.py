@@ -24,7 +24,20 @@ while (server.poll()==None):
     data = (connection.recv(4096)).decode('utf-8')
     if data=="status":
         connection.send(("Minecraft Server running.").encode('utf-8'))
-    elif data=="stop":
+    elif data[0:4]=="stop":
+        countdown = int(data[5:len(data)])
+        server.stdin.write(("say Server shutting down in " + str(countdown) + " minutes.\n").encode('utf-8'))
+        server.stdin.flush()
+        while (countdown > 0):
+            if (countdown == 10 or countdown == 5):
+                server.stdin.write(("say Server shutting down in " + str(countdown) + " minutes.\n").encode('utf-8'))
+                server.stdin.flush()
+            if (countdown == 1):
+                server.stdin.write(("say Server shutting down in " + str(countdown) + " minute.\n").encode('utf-8'))
+                server.stdin.flush()
+ 
+            time.sleep(60)
+            countdown -=1
         server.stdin.write(("stop\n").encode('utf-8'))
         server.stdin.flush()
         server.wait()
@@ -34,10 +47,12 @@ while (server.poll()==None):
         server.stdin.write(("save-all\n").encode('utf-8'))
         server.stdin.flush()
         connection.send(("saving off").encode('utf-8'))
-    elif data=="end saverun":
-        server.stdin.write(("save-on\n").encode('utf-8'))
-        server.stdin.flush()
-        connection.send(("Saving back on. Saverun complete.").encode('utf-8'))
+        connection, addr = sock.accept()
+        data = (connection.recv(4096)).decode('utf-8')
+        if data=="end saverun":
+            server.stdin.write(("save-on\n").encode('utf-8'))
+            server.stdin.flush()
+            connection.send(("Saving back on. Saverun complete.").encode('utf-8'))
     elif data=="check players":
         server.stdin.write(("list\n").encode('utf-8'))
         server.stdin.flush()
@@ -45,11 +60,6 @@ while (server.poll()==None):
         tail = subprocess.Popen ("tail --lines=2 server.log", cwd = cwd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, stdin=subprocess.PIPE, shell=True)
         result, crap= tail.communicate()
         connection.send(result)
-    elif data[0:8]=="announce":
-        data = data[9:len(data)]
-        server.stdin.write(("say " + data + "\n").encode('utf-8'))
-        server.stdin.flush()
-        connection.send("announced".encode('utf-8'))
     elif data[0:7] == "command":
         data = data[8:len(data)]
         server.stdin.write((data+"\n").encode('utf-8'))

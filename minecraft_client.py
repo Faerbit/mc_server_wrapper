@@ -55,7 +55,7 @@ def start():
         read_config()
         subprocess.call("cp -r " + mc_path + "* " + ramdisk_path, shell=True)
         print("Minecraft copied to RAM.")
-        arg= "java -Xmx2048M -jar *server*.jar"
+        arg= "java -Xmx2048M -jar *server*.jar nogui"
         call = "python minecraft_daemon.py \"" + arg + "\" " + ramdisk_path
         call = shlex.split(call)
         subprocess.Popen(call)
@@ -74,21 +74,17 @@ def update():
     download=subprocess.Popen("wget " + mc_link, shell=True, cwd ="./tmp/")
     download.wait()
     if (unpack_server=="true"):
-        subprocess.call("unzip ./tmp/*Server.zip -d ./tmp/extracted", shell=True)
+        subprocess.call("unzip ./tmp/*Server*.zip -d ./tmp/extracted", shell=True)
         subprocess.call("cp -r ./tmp/extracted/* " + mc_path, shell=True)
     else:
-        subprocess.call("cp ./tmp/*server.jar " + mc_path, shell=True)
+        subprocess.call("cp ./tmp/*server*.jar " + mc_path, shell=True)
     subprocess.call("rm -r ./tmp/", shell=True)
     print(current_mc + " updated.")
     
 def stop(time):
     if (status()==True):
-        communicate("announce Server shutting down in " + str(time) + " minutes.")
-        while (time > 0):
-            if (time == 10 or time == 5 or time == 1):
-                communicate("announce Server shutting down in " + (time) + " minutes.")
         read_config()
-        print (communicate("stop"))
+        print (communicate("stop " + time))
         subprocess.call("rsync -ucr " + ramdisk_path + "* "+mc_path,shell=True)
         subprocess.call("rm -r " + ramdisk_path + "*", shell=True)
         print ("RAMdisk cleaned.")
