@@ -1,4 +1,4 @@
-import xml.dom.minidom as dom
+from lxml import etree
 import time
 import socket
 import subprocess
@@ -10,6 +10,11 @@ mc_path = str("")
 mc_link = str("")
 unpack_server = str("")
 
+tree = etree.parse("config.xml")
+
+def read_xpath(xpath):
+   return (tree.xpath(xpath)[0].text).strip()
+
 def read_config():
     global current_mc
     global ramdisk_path
@@ -17,26 +22,12 @@ def read_config():
     global mc_link
     global unpack_server
     global world_path
-    config = dom.parse("config.xml")    
-    for config_entry in config.firstChild.childNodes:
-        if config_entry.nodeName == "current_mc":
-            for data_entry in config_entry.childNodes:
-                if data_entry.nodeName == "value":
-                    current_mc = data_entry.firstChild.data.strip()
-        if config_entry.nodeName == "ramdisk_path":
-            for data_entry in config_entry.childNodes:
-                if data_entry.nodeName == "value":
-                    ramdisk_path = data_entry.firstChild.data.strip()
-        if config_entry.nodeName == "mc_variants":
-            for data_entry in config_entry.childNodes:
-                if data_entry.nodeName == current_mc:
-                    for mc_data_entry in data_entry.childNodes:
-                        if mc_data_entry.nodeName == "path":
-                            mc_path = mc_data_entry.firstChild.data.strip()
-                        if mc_data_entry.nodeName == "link":
-                            mc_link = mc_data_entry.firstChild.data.strip()
-                        if mc_data_entry.nodeName == "unpack_server":
-                            unpack_server = mc_data_entry.firstChild.data.strip()
+    current_mc = read_xpath('/config/current_mc/value')
+    ramdisk_path = read_xpath('/config/ramdisk_path/value')
+    mc_path = read_xpath('/config/mc_variants/'+current_mc+'/path')
+    mc_link = read_xpath('/config/mc_variants/'+current_mc+'/link')
+    unpack_server = read_xpath('/config/mc_variants/'+current_mc+'/unpack_server')
+
     if mc_path =="" : 
         print ("Reading config file failed! Please check your settings!")
         return False
@@ -109,18 +100,11 @@ def ramdisk_saverun():
         
 def backup(option):
     if (status()==True):
-        config = dom.parse("config.xml")
         backup_paths=[]
-        for config_entry in config.firstChild.childNodes:
-            if config_entry.nodeName == "backup_path":
-                for data_entry in config_entry.childNodes:
-                    if data_entry.nodeName == "value":
-                        backup_path = data_entry.firstChild.data.strip()
-            if config_entry.nodeName == "backup_paths":
-                for data_entry in config_entry.childNodes:
-                    if (data_entry.firstChild):
-                        backup_paths.append(data_entry.firstChild.data.strip())
-                        print("Backing up " + data_entry.firstChild.data.strip())
+        backup_path = read_xpath('/config/backup_path/value')
+        new_paths = list(map((lambda x: x.strip()), tree.xpath('/config/backup_paths/*/text()')))
+        backup_paths.extend(new_paths)
+        print("Backing up " + str(new_paths))
                     
         if (option=="regular" or option=="update"):
             print ("Backing up to "+ backup_path + "backup_" + option + "_1.")
@@ -150,22 +134,14 @@ def status():
         return False
         
 def switch(variant):
-    config = dom.parse("config.xml")
-    for config_entry in config.firstChild.childNodes:
-        if config_entry.nodeName == "mc_variants":
-            for data_entry in config_entry.childNodes:
-                if data_entry.nodeName == variant:
-                    for config_entry_2 in config.firstChild.childNodes:
-                        if config_entry_2.nodeName == "current_mc":
-                            for data_entry_2 in config_entry_2.childNodes:
-                                if data_entry_2.nodeName == "value":
-                                    data_entry_2.firstChild.data=variant
-                                    config.writexml(open ("config.xml","w+"))
-                                    print("Active minecraft variant changed to " + variant + ".")
-                                    return()
-            else:
-                print("Please check your spelling/settings!")
+    if not tree.xpath('/config/mc_variants/'+variant):
+        print("Please check your spelling/settings!")
+        return
+    tree.xpath('/config/current_mc/value')[0].text = variant
+    tree.write("config.xml")
+    print("Active minecraft variant changed to " + variant + ".")
     
+
 def command(cmd):
     print (communicate("command "+cmd))
     
