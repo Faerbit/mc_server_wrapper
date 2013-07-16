@@ -91,7 +91,7 @@ def stop(time):
 
 def shutdown(time):
     stop(time)
-    subprocess.call("sudo /sbin/shutdown -hP now", shell=True)
+    subprocess.call("/sbin/shutdown -hP now", shell=True)
         
 def restart():
     stop(str(0))
@@ -139,7 +139,7 @@ def check_players():
         print("There are " + number + " players online.")
         if (number=="0"):
             stop(str(0))
-            subprocess.call("sudo /sbin/shutdown -hP now", shell=True)
+            subprocess.call("/sbin/shutdown -hP now", shell=True)
     
 def status():
     status=communicate("status")
