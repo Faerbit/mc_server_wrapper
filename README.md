@@ -15,6 +15,10 @@ A simple wrapper written in python 3
 + Backup Command  
   + 3 backup versions on demand  
   + 3 backup version automatically before each update  
+
+##Dependencies
+
+lxml - http://lxml.de/
   
 ##Usage
 
