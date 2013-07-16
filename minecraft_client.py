@@ -100,18 +100,10 @@ def ramdisk_saverun():
         
 def backup(option):
     if (status()==True):
-        config = dom.parse("config.xml")
         backup_paths=[]
-        for config_entry in config.firstChild.childNodes:
-            if config_entry.nodeName == "backup_path":
-                for data_entry in config_entry.childNodes:
-                    if data_entry.nodeName == "value":
-                        backup_path = data_entry.firstChild.data.strip()
-            if config_entry.nodeName == "backup_paths":
-                for data_entry in config_entry.childNodes:
-                    if (data_entry.firstChild):
-                        backup_paths.append(data_entry.firstChild.data.strip())
-                        print("Backing up " + data_entry.firstChild.data.strip())
+        backup_path = read_xpath('/config/backup_path/value')
+        backup_paths.append(read_xpath('/config/backup_paths/*'))
+        print("Backing up " + backup_paths[-1])
                     
         if (option=="regular" or option=="update"):
             print ("Backing up to "+ backup_path + "backup_" + option + "_1.")
@@ -141,22 +133,14 @@ def status():
         return False
         
 def switch(variant):
-    config = dom.parse("config.xml")
-    for config_entry in config.firstChild.childNodes:
-        if config_entry.nodeName == "mc_variants":
-            for data_entry in config_entry.childNodes:
-                if data_entry.nodeName == variant:
-                    for config_entry_2 in config.firstChild.childNodes:
-                        if config_entry_2.nodeName == "current_mc":
-                            for data_entry_2 in config_entry_2.childNodes:
-                                if data_entry_2.nodeName == "value":
-                                    data_entry_2.firstChild.data=variant
-                                    config.writexml(open ("config.xml","w+"))
-                                    print("Active minecraft variant changed to " + variant + ".")
-                                    return()
-            else:
-                print("Please check your spelling/settings!")
+    if not tree.xpath('/config/mc_variants/'+variant):
+        print("Please check your spelling/settings!")
+        return
+    tree.xpath('/config/current_mc/value')[0].text = variant
+    tree.write("config.xml")
+    print("Active minecraft variant changed to " + variant + ".")
     
+
 def command(cmd):
     print (communicate("command "+cmd))
     
