@@ -1,4 +1,4 @@
-import xml.dom.minidom as dom
+from lxml import etree
 import time
 import socket
 import subprocess
@@ -10,6 +10,11 @@ mc_path = str("")
 mc_link = str("")
 unpack_server = str("")
 
+tree = etree.parse("config.xml")
+
+def read_xpath(xpath):
+   return (tree.xpath(xpath)[0].text).strip()
+
 def read_config():
     global current_mc
     global ramdisk_path
@@ -17,26 +22,12 @@ def read_config():
     global mc_link
     global unpack_server
     global world_path
-    config = dom.parse("config.xml")    
-    for config_entry in config.firstChild.childNodes:
-        if config_entry.nodeName == "current_mc":
-            for data_entry in config_entry.childNodes:
-                if data_entry.nodeName == "value":
-                    current_mc = data_entry.firstChild.data.strip()
-        if config_entry.nodeName == "ramdisk_path":
-            for data_entry in config_entry.childNodes:
-                if data_entry.nodeName == "value":
-                    ramdisk_path = data_entry.firstChild.data.strip()
-        if config_entry.nodeName == "mc_variants":
-            for data_entry in config_entry.childNodes:
-                if data_entry.nodeName == current_mc:
-                    for mc_data_entry in data_entry.childNodes:
-                        if mc_data_entry.nodeName == "path":
-                            mc_path = mc_data_entry.firstChild.data.strip()
-                        if mc_data_entry.nodeName == "link":
-                            mc_link = mc_data_entry.firstChild.data.strip()
-                        if mc_data_entry.nodeName == "unpack_server":
-                            unpack_server = mc_data_entry.firstChild.data.strip()
+    current_mc = read_xpath('/config/current_mc/value')
+    ramdisk_path = read_xpath('/config/ramdisk_path/value')
+    mc_path = read_xpath('/config/mc_variants/'+current_mc+'/path')
+    mc_link = read_xpath('/config/mc_variants/'+current_mc+'/link')
+    unpack_server = read_xpath('/config/mc_variants/'+current_mc+'/unpack_server')
+
     if mc_path =="" : 
         print ("Reading config file failed! Please check your settings!")
         return False
