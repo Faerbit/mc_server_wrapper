@@ -103,7 +103,7 @@ def backup(option):
         backup_paths=[]
         backup_path = read_xpath('/config/backup_path/value')
         new_paths = list(map((lambda x: x.strip()), tree.xpath('/config/backup_paths/*/text()')))
-        backup_paths.append(new_paths)
+        backup_paths.extend(new_paths)
         print("Backing up " + str(new_paths))
                     
         if (option=="regular" or option=="update"):
