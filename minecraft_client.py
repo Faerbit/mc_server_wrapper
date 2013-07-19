@@ -138,7 +138,7 @@ def switch(variant):
         print("Please check your spelling/settings!")
         return
     tree.xpath('/config/current_mc/value')[0].text = variant
-    tree.write("config.xml")
+    tree.write("config.xml",encoding="utf-8",xml_declaration=True)
     print("Active minecraft variant changed to " + variant + ".")
     
 
