@@ -4,6 +4,8 @@ Minecraft Server Wrapper Scripts
 
 A simple wrapper written in python 3
 
+CURRENTLY BROKEN!
+
 ##Features
 
 + Mutliple Minecraft Installations
@@ -14,7 +16,7 @@ A simple wrapper written in python 3
 + Check Player Command (Shuts down the server if there are no more players playing)  
 + Backup Command  
   + 3 backup versions on demand  
-  + 3 backup version automatically before each update  
+  + 3 backup versions automatically before each update  
 
 ##Dependencies
 
